@@ -16,6 +16,7 @@ namespace SZTF1HF0011
         */
         static void Main(string[] args)
         {
+            /*
             #region.test
             List<Data> DataList = new List<Data>()
             {
@@ -111,98 +112,64 @@ namespace SZTF1HF0011
                 }
             };
 
-            //expected output: eagleagleagle--
+            int counter = 0;
+
+            foreach (Data input in DataList)
+            {
+                Console.Write($"Real {input.Name} output: ");
+                ReplaceRecursive(input, ref counter);
+                Console.Write($"\nExp. {input.Name} output: ");
+                Console.Write(input.expectedOutput + "\n");
+                counter = 0;
+            }
 
 
             #endregion
-            int counter = 0;
-            foreach (Data input in DataList)
-            {
-                Console.Write($"\nReal {input.Name} output: ");
-                ReplaceRecursive(input, ref counter);
-                Console.Write($"\nExp. {input.Name} output: ");
-                Console.Write(input.expectedOutput);
-                counter = 0;
-            }
-            
+            */
 
-            ;
+            string S = Console.ReadLine();
+            string P = Console.ReadLine();
+            int N = int.Parse(Console.ReadLine());
+            int MIN = int.Parse(Console.ReadLine());
+            int MAX = int.Parse(Console.ReadLine());
+
+            Data test = new Data(S, P, N, MIN, MAX);
+            int count = 0;
+            ReplaceRecursive(test, ref count);
         }
         static void ReplaceRecursive(Data input, ref int counter)
         {
-            if (counter != input.N)            
+            if (!input.P.Contains('$'))
+            {
+                ToConsole(input);
+                return;
+            }
+            else if (counter != input.N)            
             {
                 counter++;
                 string addition = "";
-                if (!input.P.Contains('$'))
-                {
-                    ToConsole(input);
-                    return;
-                }
                 foreach (char character in input.P)
-                {
-                    if (character != '$')
-                    {
-                        addition += character;
-                    }
-                    else
-                    {
-                        addition += input.S;
-                    }
-                }
+                    if (character != '$') addition += character;
+                    else addition += input.S;
 
                 input.Output = addition;
                 input.S = input.Output;
 
-                if (input.S.Length >= input.MAX)
-                {
-                    ToConsole(input);
-                }
-                else
-                {
-                    ReplaceRecursive(input, ref counter);
-                }
-                
-
-                
+                if (input.S.Length >= input.MAX) ToConsole(input);
+                else ReplaceRecursive(input, ref counter);
             }
-            else
-            {
-                ToConsole(input);
-            }
+            else ToConsole(input);
 
         }
         static void ToConsole(Data input)
         {
             string toConsole = "";
             for (int i = input.MIN - 1; i < input.MAX; i++)
-            {
-                if (i < input.Output.Length)
-                {
-                    toConsole += input.Output[i];
-                }
-                else
-                {
-                    toConsole += '-';
-                }
-            }
+                if (i < input.Output.Length) toConsole += input.Output[i];
+                else toConsole += '-';
             Console.Write(toConsole);
         }
         
     }
-    class Data
-    {
-        public string S { get; set; }
-        public string P { get; set; }
-        public int N { get; set; }
-        public int MIN { get; set; }
-        public int MAX { get; set; }
-        public string Output { get; set; }
-        public string expectedOutput { get; set; }
-        public string Name { get; set; }
-        public Data()
-        {
-            Output = " ";
-        }
-    }
+    
 }
