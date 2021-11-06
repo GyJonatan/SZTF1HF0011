@@ -79,7 +79,7 @@ namespace SZTF1HF0011
                     MAX = 65,
                     expectedOutput = "xaxbxcxaxaxbxcxbxaxbxcxcxaxbxcxbx"
                 },
-                new Data()
+                new Data() 
                 {
                     Name = "7",
                     S = "a",
